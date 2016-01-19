@@ -131,10 +131,7 @@ static int lservo_pulse( lua_State* L )
 	d1=servo_reduce_first_by_us;
 	uint32_t tt[MAX_NUM_SERVOS],t1;
 	for(i=servo_min;i<MAX_NUM_SERVOS;i++){
-		noInterrupts();
-		DIRECT_WRITE(servo_pin[i], HIGH);
-		interrupts();
-		//platform_gpio_write(servo_pin[i], 1);
+		platform_gpio_write(servo_pin[i], 1);
 		tt[i]=system_get_time();
 		delayMicroseconds(DELAY_SHIFT);
 	}
@@ -143,9 +140,7 @@ static int lservo_pulse( lua_State* L )
 		d = servo_delay[i]+tt[i]-t1-servo_reduce_each_by_us-d1;
 		d1=0;
 		delayMicroseconds(d);
-		noInterrupts();
-		DIRECT_WRITE(servo_pin[i], LOW);
-		interrupts();
+		platform_gpio_write(servo_pin[i], 0);
 		tt[i]-=system_get_time();
 	}
 	if(servo_stats){
