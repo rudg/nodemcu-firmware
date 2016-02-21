@@ -630,6 +630,20 @@ static int lu8g_nextPage( lua_State *L )
     return 1;
 }
 
+// Lua: bool = u8g.skipPage(self)
+static int lu8g_skipPage( lua_State *L )
+{
+    lu8g_userdata_t *lud;
+
+    if ((lud = get_lud( L )) == NULL)
+        return 0;
+
+    u8g_pb_t *pb = (u8g_pb_t *)(LU8G->dev->dev_mem);
+    lua_pushboolean( L, u8g_page_Next(&(pb->p)) );
+
+    return 1;
+}
+
 // Lua: u8g.sleepOn( self )
 static int lu8g_sleepOn( lua_State *L )
 {
@@ -1056,6 +1070,7 @@ static const LUA_REG_TYPE lu8g_display_map[] = {
   { LSTRKEY( "getStrWidth" ),                  LFUNCVAL( lu8g_getStrWidth ) },
   { LSTRKEY( "getWidth" ),                     LFUNCVAL( lu8g_getWidth ) },
   { LSTRKEY( "nextPage" ),                     LFUNCVAL( lu8g_nextPage ) },
+  { LSTRKEY( "skipPage" ),                     LFUNCVAL( lu8g_skipPage ) },
   { LSTRKEY( "setColorIndex" ),                LFUNCVAL( lu8g_setColorIndex ) },
   { LSTRKEY( "setDefaultBackgroundColor" ),    LFUNCVAL( lu8g_setDefaultBackgroundColor ) },
   { LSTRKEY( "setDefaultForegroundColor" ),    LFUNCVAL( lu8g_setDefaultForegroundColor ) },
