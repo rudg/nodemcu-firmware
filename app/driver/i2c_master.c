@@ -22,6 +22,11 @@ LOCAL uint8 m_nLastSCL;
 LOCAL uint8 pinSDA = 2;
 LOCAL uint8 pinSCL = 15;
 
+//divider for i2c_master_wait  
+LOCAL uint8 i2c_master_divider=1;
+void ICACHE_FLASH_ATTR i2c_master_setdivider(uint8 div){
+    i2c_master_divider=div;
+}
 /******************************************************************************
  * FunctionName : i2c_master_setDC
  * Description  : Internal used function -
