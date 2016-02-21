@@ -637,9 +637,20 @@ static int lu8g_skipPage( lua_State *L )
 
     if ((lud = get_lud( L )) == NULL)
         return 0;
-
     u8g_pb_t *pb = (u8g_pb_t *)(LU8G->dev->dev_mem);
-    lua_pushboolean( L, u8g_page_Next(&(pb->p)) );
+
+//Based on: uint8_t u8g_NextPageLL(u8g_t *u8g, u8g_dev_t *dev)
+    uint8_t r;
+    LU8G->state_cb(U8G_STATE_MSG_BACKUP_ENV);
+    LU8G->state_cb(U8G_STATE_MSG_RESTORE_U8G);
+    r = u8g_page_Next(&(pb->p));
+    if ( r != 0 )
+    {
+        u8g_call_dev_fn(LU8G, LU8G->dev, U8G_DEV_MSG_GET_PAGE_BOX, &(LU8G->current_page));
+    }
+    u8g->state_cb(U8G_STATE_MSG_RESTORE_ENV);
+    
+    lua_pushboolean( L, r );
 
     return 1;
 }
