@@ -648,7 +648,7 @@ static int lu8g_skipPage( lua_State *L )
     {
         u8g_call_dev_fn(LU8G, LU8G->dev, U8G_DEV_MSG_GET_PAGE_BOX, &(LU8G->current_page));
     }
-    u8g->state_cb(U8G_STATE_MSG_RESTORE_ENV);
+    LU8G->state_cb(U8G_STATE_MSG_RESTORE_ENV);
     
     lua_pushboolean( L, r );
 
