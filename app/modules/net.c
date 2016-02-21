@@ -1351,7 +1351,7 @@ static int net_socket_unhold( lua_State* L )
   return 0;
 }
 
-// Lua: ip,port = sk:getpeer()
+// Lua: ip,port, local_port = sk:getpeer()
 static int net_socket_getpeer( lua_State* L )
 {
   lnet_userdata *nud;
@@ -1365,15 +1365,18 @@ static int net_socket_getpeer( lua_State* L )
       if ( nud->pesp_conn->proto.tcp->remote_port != 0 ) {
         lua_pushstring( L, temp );
         lua_pushinteger( L, nud->pesp_conn->proto.tcp->remote_port );
+        lua_pushinteger( L, nud->pesp_conn->proto.tcp->local_port );
       } else {
+        lua_pushnil( L );
         lua_pushnil( L );
         lua_pushnil( L );
       }
   } else {
       lua_pushnil( L );
       lua_pushnil( L );
+      lua_pushnil( L );
   }
-  return 2;
+  return 3;
 }
 
 // Lua: socket:dns( string, function(ip) )
