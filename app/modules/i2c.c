@@ -19,7 +19,7 @@ static int i2c_setup( lua_State *L )
     return luaL_error( L, "no i2c for D0" );
 
   s32 speed = ( s32 )luaL_checkinteger( L, 4 );
-  if (speed <= 0)
+  if (speed < 0)
     return luaL_error( L, "wrong arg range" );
   lua_pushinteger( L, platform_i2c_setup( id, sda, scl, (u32)speed ) );
   return 1;
