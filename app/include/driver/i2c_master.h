@@ -55,7 +55,7 @@
 
 void i2c_master_gpio_init(uint8 sda, uint8 scl);
 void i2c_master_init(void);
-uint8 i2c_master_divider=1;
+void i2c_master_setdivider(uint8 div);
 #define i2c_master_wait(x)    if(i2c_master_divider>0){os_delay_us(x/i2c_master_divider);}
 void i2c_master_stop(void);
 void i2c_master_start(void);
